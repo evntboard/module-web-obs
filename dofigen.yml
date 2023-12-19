@@ -1,0 +1,32 @@
+---
+builders:
+- image: node:20
+  workdir: /home/node/app
+  adds:
+  - "package.json"
+  - "package-lock.json"
+  script:
+  - npm install
+- image: builder-0
+  workdir: /home/node/app
+  adds:
+  - "."
+  script:
+  - npm run build --production
+image: nginx
+workdir: /usr/share/nginx/html
+artifacts:
+- builder: builder-1
+  source: "/home/node/app/dist/"
+  destination: "/usr/share/nginx/html"
+ignores:
+- "**"
+- "!/src/"
+- "!/package-lock.json"
+- "!/package.json"
+- "!/index.html"
+- "!/postcss.config.js"
+- "!/public"
+- "!/tailwind.config.js"
+- "!/tsconfig.json"
+
