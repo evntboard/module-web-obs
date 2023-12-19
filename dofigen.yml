@@ -15,6 +15,7 @@ builders:
   - npm run build --production
 image: nginx
 workdir: /usr/share/nginx/html
+user: 0
 artifacts:
 - builder: builder-1
   source: "/home/node/app/dist/"
